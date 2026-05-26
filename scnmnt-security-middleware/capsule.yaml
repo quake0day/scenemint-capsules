@@ -1,0 +1,55 @@
+apiVersion: capsule.dev/v0.1
+kind: Capsule
+name: scnmnt-security-middleware
+version: 0.1.0
+type: adapter
+purpose:
+  summary: 'Provides a set of reusable security middleware for an Echo HTTP server,
+    including secure headers, body limits, source origin validation, and CSRF protection.
+    It ensures that API endpoints are protected against common web vulnerabilities.
+
+    '
+  owns:
+  - HTTP security header configuration (X-Frame-Options, CSP, etc.)
+  - Request body size limiting
+  - Source origin validation to prevent cross-site requests
+  - CSRF token generation, cookie management, and validation
+  does_not_own:
+  - User authentication (beyond CSRF token validation)
+  - Specific API business logic
+  - Application configuration outside of security settings
+interfaces:
+  provides:
+  - kind: library
+    name: security.Middleware
+    description: Echo middleware for various security features.
+  - kind: http_api
+    name: /api/session
+    description: Endpoint to retrieve a CSRF token for client-side use.
+  requires:
+  - kind: env
+    name: SECURITY_SECURE_COOKIES
+    description: Boolean flag to determine if CSRF cookies should be marked as secure.
+agent:
+  summary_for_ai: 'An agent working on this capsule would focus on implementing and
+    testing HTTP security best practices. They should be familiar with web security
+    concepts like CSRF, XSS, and origin policies, and how to apply them as middleware.
+
+    '
+  avoid:
+  - Implementing any business logic unrelated to security
+  - Direct database access
+verification:
+  invariants:
+  - CSRF tokens must be unique, securely generated, and correctly validated.
+  - Cross-site requests (except safe methods) must be rejected.
+  - Secure headers must be consistently applied to all responses.
+x-reuse:
+  notes: 'The `csrfCookieName` (`_scenemint_csrf`), `csrfTokenBytes`, and `maxBodyBytes`
+    constants are hardcoded. Error messages returned by the middleware are hardcoded
+    in Chinese and would need localization or generalization. The capsule is tightly
+    coupled with the Echo HTTP framework.
+
+    '
+x-reconstruct:
+  install: install.json

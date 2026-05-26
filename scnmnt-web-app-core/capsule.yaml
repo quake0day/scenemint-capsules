@@ -1,0 +1,78 @@
+apiVersion: capsule.dev/v0.1
+kind: Capsule
+name: scnmnt-web-app-core
+version: 0.1.0
+type: template
+purpose:
+  summary: 'The main frontend application for SceneMint, built with Astro and React.
+    It provides the user interface for image generation, prompt enhancement, quota
+    management, and displays image history. It integrates with the backend API services.
+
+    '
+  owns:
+  - All application-specific React components for the image generator UI
+  - Frontend state management for image generation, history, and quota
+  - Client-side utilities for fingerprinting, HTTP requests, and history persistence
+  - Astro pages and configuration for the single-page application
+  - Public assets like logos and favicons
+  does_not_own:
+  - Generic UI components (delegated to scnmnt-web-ui-components)
+  - Backend API implementations
+interfaces:
+  provides:
+  - kind: http_api
+    name: /
+    description: The main frontend single-page application.
+  requires:
+  - kind: http_api
+    name: /api/session
+    from_capsule: scnmnt-security-middleware
+    description: To fetch CSRF tokens.
+  - kind: http_api
+    name: /api/quota/*
+    from_capsule: scnmnt-quota-service
+    description: To manage and display user quotas.
+  - kind: http_api
+    name: /api/prompts/enhance
+    from_capsule: scnmnt-image-generation-service
+    description: To enhance user prompts.
+  - kind: http_api
+    name: /api/images/*
+    from_capsule: scnmnt-image-generation-service
+    description: To generate images, check task status, and retrieve images.
+  - kind: library
+    name: React UI Components
+    from_capsule: scnmnt-web-ui-components
+    description: Generic UI components used to build the application interface.
+dependencies:
+  capsules:
+  - name: scnmnt-web-ui-components
+    version: '>=0.1.0'
+agent:
+  summary_for_ai: 'An agent working on this capsule would focus on frontend development,
+    user experience, and integrating with backend APIs. They should be proficient
+    in Astro, React, TypeScript, and understand client-side state management and API
+    consumption.
+
+    '
+  avoid:
+  - Modifying backend Go code
+  - Changing the core logic of generic UI components
+verification:
+  invariants:
+  - The application must correctly display image generation status and history.
+  - Quota information must be accurately reflected from the backend.
+  - All user interactions must be responsive and provide appropriate feedback.
+x-reuse:
+  notes: 'This capsule is marked as `template` due to its heavy project-specific branding
+    and content. `BrandHeader.tsx` contains the ''SceneMint'' brand name, ''Codex
+    App'' attribution, and a hardcoded `githubUrl`. `copy.ts` contains all hardcoded
+    UI text, storage keys (`scenemint:language`, `scenemint:size`, `scenemint:enhanceDirection`),
+    and constants like `maxReferenceSizeMB`. Public assets (`brand-logo.png`, `favicon.ico`,
+    etc.) are also specific. The `astro.config.mjs` includes a proxy for `/api` which
+    is specific to the backend integration. The `fingerprint.ts` utility is tied to
+    the quota system''s use of browser fingerprints.
+
+    '
+x-reconstruct:
+  install: install.json

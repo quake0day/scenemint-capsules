@@ -1,0 +1,31 @@
+{
+  "$schema": "https://capsule-registry.pages.dev/schemas/install.v1.json",
+  "files": [
+    {
+      "from": "src/internal/image/client.go",
+      "to": "internal/image/client.go"
+    },
+    {
+      "from": "src/internal/image/client_test.go",
+      "to": "internal/image/client_test.go"
+    },
+    {
+      "from": "src/internal/image/prompt_enhance.go",
+      "to": "internal/image/prompt_enhance.go"
+    },
+    {
+      "from": "src/internal/image/size.go",
+      "to": "internal/image/size.go"
+    },
+    {
+      "from": "src/internal/image/upstream.go",
+      "to": "internal/image/upstream.go"
+    }
+  ],
+  "env_required": [
+    "CHATGPT2API_BASE_URL",
+    "CHATGPT2API_API_KEY",
+    "CHATGPT2API_IMAGE_MODEL",
+    "CHATGPT2API_PROMPT_MODEL"
+  ]
+}

@@ -1,0 +1,54 @@
+apiVersion: capsule.dev/v0.1
+kind: Capsule
+name: scnmnt-web-ui-components
+version: 0.1.0
+type: library
+purpose:
+  summary: 'Provides a collection of generic, reusable UI components based on shadcn/ui
+    and Tailwind CSS. These components form the visual building blocks for the frontend
+    application, offering a consistent design system.
+
+    '
+  owns:
+  - Basic UI elements like buttons, cards, inputs, labels, selects, etc.
+  - Tailwind CSS configuration and global styles
+  - Shadcn/ui configuration and aliases
+  does_not_own:
+  - Application-specific logic or state management
+  - Branding or content specific to SceneMint
+  - Backend API interactions
+interfaces:
+  provides:
+  - kind: library
+    name: React UI Components
+    description: A set of generic React components for building user interfaces.
+  requires:
+  - kind: library
+    name: React
+    description: Frontend framework for building components.
+  - kind: library
+    name: Tailwind CSS
+    description: Utility-first CSS framework for styling.
+agent:
+  summary_for_ai: 'An agent working on this capsule would focus on maintaining and
+    extending the UI component library. They should be proficient in React, TypeScript,
+    and Tailwind CSS, ensuring components are accessible, performant, and adhere to
+    the design system.
+
+    '
+  avoid:
+  - Introducing application-specific logic or state
+  - Hardcoding business-specific text or branding
+verification:
+  invariants:
+  - All components must be accessible and responsive.
+  - Components must adhere to the established design tokens and visual style.
+x-reuse:
+  notes: 'This capsule relies on a Tailwind CSS setup and `shadcn/ui` conventions.
+    The `components.json` file defines aliases and styling configuration specific
+    to `shadcn/ui` which would need to be adapted if moving to a different UI library
+    or setup. `global.css` contains base styles that are part of the design system.
+
+    '
+x-reconstruct:
+  install: install.json

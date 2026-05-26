@@ -1,0 +1,16 @@
+{
+  "$schema": "https://capsule-registry.pages.dev/schemas/install.v1.json",
+  "files": [
+    {
+      "from": "src/internal/security/security.go",
+      "to": "internal/security/security.go"
+    },
+    {
+      "from": "src/internal/security/security_test.go",
+      "to": "internal/security/security_test.go"
+    }
+  ],
+  "env_required": [
+    "SECURITY_SECURE_COOKIES"
+  ]
+}

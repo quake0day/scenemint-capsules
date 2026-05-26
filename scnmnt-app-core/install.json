@@ -1,0 +1,70 @@
+{
+  "$schema": "https://capsule-registry.pages.dev/schemas/install.v1.json",
+  "files": [
+    {
+      "from": "src/.dockerignore",
+      "to": ".dockerignore"
+    },
+    {
+      "from": "src/.env.example",
+      "to": ".env.example"
+    },
+    {
+      "from": "src/.github/workflows/docker.yml",
+      "to": ".github/workflows/docker.yml"
+    },
+    {
+      "from": "src/.gitignore",
+      "to": ".gitignore"
+    },
+    {
+      "from": "src/AGENTS.md",
+      "to": "AGENTS.md"
+    },
+    {
+      "from": "src/cmd/main.go",
+      "to": "cmd/main.go"
+    },
+    {
+      "from": "src/Dockerfile",
+      "to": "Dockerfile"
+    },
+    {
+      "from": "src/go.mod",
+      "to": "go.mod"
+    },
+    {
+      "from": "src/go.sum",
+      "to": "go.sum"
+    },
+    {
+      "from": "src/internal/app.go",
+      "to": "internal/app.go"
+    },
+    {
+      "from": "src/internal/config/config.go",
+      "to": "internal/config/config.go"
+    },
+    {
+      "from": "src/internal/handler/status.go",
+      "to": "internal/handler/status.go"
+    },
+    {
+      "from": "src/Makefile",
+      "to": "Makefile"
+    },
+    {
+      "from": "src/README.md",
+      "to": "README.md"
+    }
+  ],
+  "env_required": [
+    "HOST",
+    "PORT",
+    "CHATGPT2API_BASE_URL",
+    "CHATGPT2API_API_KEY",
+    "CHATGPT2API_IMAGE_MODEL",
+    "CHATGPT2API_PROMPT_MODEL",
+    "SECURITY_SECURE_COOKIES"
+  ]
+}

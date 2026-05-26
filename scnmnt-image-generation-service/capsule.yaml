@@ -1,0 +1,85 @@
+apiVersion: capsule.dev/v0.1
+kind: Capsule
+name: scnmnt-image-generation-service
+version: 0.1.0
+type: subsystem
+purpose:
+  summary: 'Provides core functionality for AI image generation and prompt enhancement.
+    It interacts with an upstream AI API, handles image uploads, task submission,
+    and polling for results, as well as prompt enhancement via streaming.
+
+    '
+  owns:
+  - Logic for submitting image generation and editing tasks to an upstream API
+  - Prompt enhancement logic, including system prompts and streaming responses
+  - Image size normalization and validation
+  - Internal HTTP client for upstream API communication
+  does_not_own:
+  - User authentication or authorization
+  - Quota management (delegated to scnmnt-quota-service)
+  - API route registration (delegated to scnmnt-api-router)
+interfaces:
+  provides:
+  - kind: library
+    name: image.Client
+    description: Go client for AI image generation and prompt enhancement.
+  - kind: http_api
+    name: /api/images/generate
+    description: Endpoint to submit image generation tasks.
+  - kind: http_api
+    name: /api/prompts/enhance
+    description: Endpoint to enhance user prompts with streaming responses.
+  - kind: http_api
+    name: /api/images/tasks/:id
+    description: Endpoint to fetch the status of an image generation task.
+  - kind: http_api
+    name: /api/images/tasks/:id/image
+    description: Endpoint to proxy generated images.
+  requires:
+  - kind: library
+    name: quota.Store
+    from_capsule: scnmnt-quota-service
+    description: Used to spend and refund user credits for image generation.
+  - kind: env
+    name: CHATGPT2API_BASE_URL
+    description: Base URL for the upstream AI API.
+  - kind: env
+    name: CHATGPT2API_API_KEY
+    description: API key for authentication with the upstream AI API.
+  - kind: env
+    name: CHATGPT2API_IMAGE_MODEL
+    description: Model identifier for image generation.
+  - kind: env
+    name: CHATGPT2API_PROMPT_MODEL
+    description: Model identifier for prompt enhancement.
+dependencies:
+  capsules:
+  - name: scnmnt-quota-service
+    version: '>=0.1.0'
+agent:
+  summary_for_ai: 'An agent working on this capsule would focus on integrating with
+    external AI APIs, handling image processing (uploads, proxying), and managing
+    task states. They should be proficient in HTTP client interactions, multipart
+    forms, and streaming responses.
+
+    '
+  avoid:
+  - Modifying database schema for quota management
+  - Implementing frontend UI components
+verification:
+  invariants:
+  - All requests to the upstream AI API must be authenticated with the provided API
+    key.
+  - Image generation tasks must correctly deduct quota credits, and refund on failure.
+  - Prompt enhancement must return a valid stream of text.
+x-reuse:
+  notes: 'This capsule is heavily dependent on the `CHATGPT2API_BASE_URL`, `CHATGPT2API_API_KEY`,
+    `CHATGPT2API_IMAGE_MODEL`, and `CHATGPT2API_PROMPT_MODEL` environment variables.
+    The `gox/openai` library is used for OpenAI API interactions. Constants like `maxMultipartMemory`,
+    `maxReferenceUploadBytes`, `maxReferenceUploadSizeMB` define specific limits that
+    might need adjustment for different contexts. The `taskAPIRoot` and `openAIBaseURL`
+    are derived from `CHATGPT2API_BASE_URL`.
+
+    '
+x-reconstruct:
+  install: install.json

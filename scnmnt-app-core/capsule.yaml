@@ -1,0 +1,84 @@
+apiVersion: capsule.dev/v0.1
+kind: Capsule
+name: scnmnt-app-core
+version: 0.1.0
+type: subsystem
+purpose:
+  summary: 'Manages the overall Go application lifecycle, configuration loading, logger
+    setup, and serves static frontend assets. It acts as the orchestrator, integrating
+    various backend services and exposing the main HTTP server.
+
+    '
+  owns:
+  - Application entry point and main function
+  - Centralized configuration loading from environment variables
+  - Global logger setup
+  - Static file serving for the frontend
+  - Core build and development scripts (Makefile, Dockerfile)
+  - Repository-level documentation and ignore files
+  does_not_own:
+  - Specific API route definitions (delegated to scnmnt-api-router)
+  - Business logic for image generation, quota, or security
+interfaces:
+  provides:
+  - kind: cli
+    name: run
+    description: Main application entry point to start the HTTP server.
+  - kind: http_api
+    name: /api/status
+    description: Provides a basic 'ok' status endpoint for health checks.
+  - kind: env
+    name: Config
+    description: Application configuration loaded from environment variables.
+  requires:
+  - kind: library
+    name: image.Client
+    from_capsule: scnmnt-image-generation-service
+    description: Image generation and prompt enhancement client.
+  - kind: library
+    name: quota.Store
+    from_capsule: scnmnt-quota-service
+    description: Quota management store.
+  - kind: library
+    name: security.Middleware
+    from_capsule: scnmnt-security-middleware
+    description: Security middleware for HTTP headers, CSRF, and source guarding.
+  - kind: library
+    name: router.Register
+    from_capsule: scnmnt-api-router
+    description: Function to register all API routes onto the Echo instance.
+dependencies:
+  capsules:
+  - name: scnmnt-image-generation-service
+    version: '>=0.1.0'
+  - name: scnmnt-quota-service
+    version: '>=0.1.0'
+  - name: scnmnt-security-middleware
+    version: '>=0.1.0'
+  - name: scnmnt-api-router
+    version: '>=0.1.0'
+agent:
+  summary_for_ai: 'This is the core Go application that orchestrates other backend
+    services. An agent working on this capsule would focus on application startup,
+    configuration, logging, and serving static files. It should ensure proper initialization
+    and shutdown of dependent services.
+
+    '
+  avoid:
+  - Implementing specific business logic for image generation or quota management
+  - Modifying frontend code directly
+verification:
+  invariants:
+  - All required environment variables must be present and valid at startup.
+  - The HTTP server must start successfully and serve static files from 'web/dist'.
+x-reuse:
+  notes: 'The Dockerfile is a multi-stage build that includes both Go backend and
+    Bun/Astro frontend. For reuse, it would need to be split or adapted to only build
+    the Go backend. The `quota.DefaultPath` (`data/quota.db`) is hardcoded. The `gox/server`
+    dependency is specific and might need replacement if moving to a different HTTP
+    framework. Environment variable names like `CHATGPT2API_BASE_URL` are specific
+    to the upstream API.
+
+    '
+x-reconstruct:
+  install: install.json

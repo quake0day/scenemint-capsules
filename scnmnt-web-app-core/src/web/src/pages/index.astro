@@ -1,0 +1,61 @@
+---
+import { ImageGenerator } from "@/components/ImageGenerator"
+import { languageBootScript } from "@/components/image-generator/preferences"
+import packageInfo from "../../package.json"
+import "@/styles/global.css"
+
+const appVersion = packageInfo.version
+const githubUrl = "https://github.com/sunls24/scenemint"
+const siteTitle = "SceneMint - 把想象变成画面"
+const siteDescription =
+  "SceneMint 是轻量 AI 图像生成产品，支持文字描述、参考图和提示词增强，快速把灵感变成画面。"
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "SceneMint",
+  description: siteDescription,
+  applicationCategory: "MultimediaApplication",
+  operatingSystem: "Any",
+  inLanguage: "zh-CN",
+}
+---
+
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="application-name" content="SceneMint" />
+    <meta name="description" content={siteDescription} />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#f7fbf9" />
+    <meta property="og:title" content={siteTitle} />
+    <meta property="og:description" content={siteDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={siteTitle} />
+    <meta name="twitter:description" content={siteDescription} />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(structuredData)}
+    />
+    <title>{siteTitle}</title>
+    <script is:inline set:html={languageBootScript}></script>
+    <script
+      is:inline
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "82e9b6f424234f19a16c1bc554f3ca41"}'></script>
+  </head>
+  <body class="min-h-dvh overflow-x-hidden bg-background text-foreground antialiased xl:flex xl:h-dvh xl:flex-col xl:overflow-hidden">
+    <ImageGenerator
+      appVersion={appVersion}
+      githubUrl={githubUrl}
+      client:only="react"
+    />
+  </body>
+</html>

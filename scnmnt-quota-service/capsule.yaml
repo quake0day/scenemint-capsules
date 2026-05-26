@@ -1,0 +1,55 @@
+apiVersion: capsule.dev/v0.1
+kind: Capsule
+name: scnmnt-quota-service
+version: 0.1.0
+type: subsystem
+purpose:
+  summary: 'Manages user credit quotas for image generation. It provides functionalities
+    for checking current balance, daily check-ins to grant credits, and spending credits,
+    using a local bbolt database for persistence.
+
+    '
+  owns:
+  - Credit balance management for users identified by fingerprints
+  - Daily credit grant mechanism with a balance cap
+  - Persistence layer using bbolt database
+  - Error handling specific to quota operations
+  does_not_own:
+  - Generation of user fingerprints
+  - Integration with external payment systems
+  - API route registration (delegated to scnmnt-api-router)
+interfaces:
+  provides:
+  - kind: library
+    name: quota.Store
+    description: Go client for managing user quotas.
+  - kind: http_api
+    name: /api/quota/status
+    description: Endpoint to retrieve a user's current quota status.
+  - kind: http_api
+    name: /api/quota/check-in
+    description: Endpoint to allow users to perform a daily check-in for credits.
+agent:
+  summary_for_ai: 'An agent working on this capsule would focus on database interactions
+    (bbolt), credit logic (granting, spending, capping), and ensuring data integrity.
+    They should understand transactional operations and error handling for data storage.
+
+    '
+  avoid:
+  - Implementing image generation logic
+  - Handling HTTP security concerns like CSRF
+verification:
+  invariants:
+  - User balances must not exceed `BalanceCap`.
+  - Daily grants must only apply once per day per user.
+  - Credits must be accurately deducted upon successful 'Spend' operations.
+x-reuse:
+  notes: 'The `DefaultPath` constant (`data/quota.db`) specifies the local bbolt database
+    file path. `DailyGrant` (10) and `BalanceCap` (100) are hardcoded constants defining
+    the quota policy. Error messages like ''浏览器指纹不正确'' are hardcoded in Chinese and
+    would need localization or generalization. The use of `bbolt` is a specific technology
+    choice.
+
+    '
+x-reconstruct:
+  install: install.json

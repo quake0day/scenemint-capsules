@@ -1,0 +1,70 @@
+apiVersion: capsule.dev/v0.1
+kind: Capsule
+name: scnmnt-api-router
+version: 0.1.0
+type: adapter
+purpose:
+  summary: 'Registers all backend API routes for the SceneMint application, connecting
+    specific URL paths to their respective handlers from other backend capsules. It
+    acts as the central routing configuration for the HTTP server.
+
+    '
+  owns:
+  - Mapping of API endpoints to handler functions
+  - Application of security middleware to specific routes
+  does_not_own:
+  - Implementation of handler business logic
+  - Core application setup or configuration
+interfaces:
+  provides:
+  - kind: http_api
+    name: /api/*
+    description: All backend API routes for the application.
+  requires:
+  - kind: library
+    name: image.Client
+    from_capsule: scnmnt-image-generation-service
+    description: Client for image generation and prompt enhancement handlers.
+  - kind: library
+    name: quota.Store
+    from_capsule: scnmnt-quota-service
+    description: Store for quota status and check-in handlers.
+  - kind: library
+    name: security.Middleware
+    from_capsule: scnmnt-security-middleware
+    description: Security middleware for applying CSRF and source guard to routes.
+  - kind: library
+    name: config.Security
+    from_capsule: scnmnt-app-core
+    description: Security configuration for initializing middleware.
+dependencies:
+  capsules:
+  - name: scnmnt-image-generation-service
+    version: '>=0.1.0'
+  - name: scnmnt-quota-service
+    version: '>=0.1.0'
+  - name: scnmnt-security-middleware
+    version: '>=0.1.0'
+agent:
+  summary_for_ai: 'An agent working on this capsule would focus on defining and organizing
+    API endpoints. They should ensure that routes are correctly mapped to handlers
+    and that appropriate middleware is applied for security and request processing.
+
+    '
+  avoid:
+  - Implementing the actual logic within the handlers
+  - Changing the core HTTP server setup
+verification:
+  invariants:
+  - All sensitive API routes must be protected by CSRF and source guard middleware.
+  - API paths must be consistent and follow the defined `/api/*` prefix.
+x-reuse:
+  notes: 'This capsule is an adapter for the Echo HTTP framework. The specific API
+    paths (`/api/session`, `/api/status`, `/api/quota/status`, `/api/quota/check-in`,
+    `/api/prompts/enhance`, `/api/images/generate`, `/api/images/tasks/:id`, `/api/images/tasks/:id/image`)
+    are hardcoded and specific to the SceneMint application. The `security.BodyLimit()`
+    middleware is also applied here.
+
+    '
+x-reconstruct:
+  install: install.json

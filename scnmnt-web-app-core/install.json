@@ -1,0 +1,126 @@
+{
+  "$schema": "https://capsule-registry.pages.dev/schemas/install.v1.json",
+  "files": [
+    {
+      "from": "src/web/.gitignore",
+      "to": ".gitignore"
+    },
+    {
+      "from": "src/web/astro.config.mjs",
+      "to": "astro.config.mjs"
+    },
+    {
+      "from": "src/web/package.json",
+      "to": "package.json"
+    },
+    {
+      "from": "src/web/public/apple-touch-icon.png",
+      "to": "public/apple-touch-icon.png"
+    },
+    {
+      "from": "src/web/public/brand-logo.png",
+      "to": "public/brand-logo.png"
+    },
+    {
+      "from": "src/web/public/favicon.ico",
+      "to": "public/favicon.ico"
+    },
+    {
+      "from": "src/web/public/favicon.png",
+      "to": "public/favicon.png"
+    },
+    {
+      "from": "src/web/public/robots.txt",
+      "to": "public/robots.txt"
+    },
+    {
+      "from": "src/web/src/components/image-generator/BrandHeader.tsx",
+      "to": "src/components/image-generator/BrandHeader.tsx"
+    },
+    {
+      "from": "src/web/src/components/image-generator/copy.ts",
+      "to": "src/components/image-generator/copy.ts"
+    },
+    {
+      "from": "src/web/src/components/image-generator/CurrentImagePanel.tsx",
+      "to": "src/components/image-generator/CurrentImagePanel.tsx"
+    },
+    {
+      "from": "src/web/src/components/image-generator/FallbackImage.tsx",
+      "to": "src/components/image-generator/FallbackImage.tsx"
+    },
+    {
+      "from": "src/web/src/components/image-generator/GeneratorForm.tsx",
+      "to": "src/components/image-generator/GeneratorForm.tsx"
+    },
+    {
+      "from": "src/web/src/components/image-generator/HistoryPanel.tsx",
+      "to": "src/components/image-generator/HistoryPanel.tsx"
+    },
+    {
+      "from": "src/web/src/components/image-generator/ImagePreviewLightbox.tsx",
+      "to": "src/components/image-generator/ImagePreviewLightbox.tsx"
+    },
+    {
+      "from": "src/web/src/components/image-generator/preferences.ts",
+      "to": "src/components/image-generator/preferences.ts"
+    },
+    {
+      "from": "src/web/src/components/image-generator/QuotaPanel.tsx",
+      "to": "src/components/image-generator/QuotaPanel.tsx"
+    },
+    {
+      "from": "src/web/src/components/image-generator/SizeOption.tsx",
+      "to": "src/components/image-generator/SizeOption.tsx"
+    },
+    {
+      "from": "src/web/src/components/image-generator/useQuota.ts",
+      "to": "src/components/image-generator/useQuota.ts"
+    },
+    {
+      "from": "src/web/src/components/image-generator/useTaskPolling.ts",
+      "to": "src/components/image-generator/useTaskPolling.ts"
+    },
+    {
+      "from": "src/web/src/components/image-generator/utils.ts",
+      "to": "src/components/image-generator/utils.ts"
+    },
+    {
+      "from": "src/web/src/components/ImageGenerator.tsx",
+      "to": "src/components/ImageGenerator.tsx"
+    },
+    {
+      "from": "src/web/src/lib/fingerprint.ts",
+      "to": "src/lib/fingerprint.ts"
+    },
+    {
+      "from": "src/web/src/lib/history.ts",
+      "to": "src/lib/history.ts"
+    },
+    {
+      "from": "src/web/src/lib/http.ts",
+      "to": "src/lib/http.ts"
+    },
+    {
+      "from": "src/web/src/lib/openaiStream.test.ts",
+      "to": "src/lib/openaiStream.test.ts"
+    },
+    {
+      "from": "src/web/src/lib/openaiStream.ts",
+      "to": "src/lib/openaiStream.ts"
+    },
+    {
+      "from": "src/web/src/lib/utils.ts",
+      "to": "src/lib/utils.ts"
+    },
+    {
+      "from": "src/web/src/pages/index.astro",
+      "to": "src/pages/index.astro"
+    },
+    {
+      "from": "src/web/tsconfig.json",
+      "to": "tsconfig.json"
+    }
+  ],
+  "env_required": []
+}

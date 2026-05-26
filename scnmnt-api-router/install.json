@@ -1,0 +1,10 @@
+{
+  "$schema": "https://capsule-registry.pages.dev/schemas/install.v1.json",
+  "files": [
+    {
+      "from": "src/internal/router/route.go",
+      "to": "internal/router/route.go"
+    }
+  ],
+  "env_required": []
+}

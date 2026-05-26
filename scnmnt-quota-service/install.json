@@ -1,0 +1,22 @@
+{
+  "$schema": "https://capsule-registry.pages.dev/schemas/install.v1.json",
+  "files": [
+    {
+      "from": "src/internal/quota/errors.go",
+      "to": "internal/quota/errors.go"
+    },
+    {
+      "from": "src/internal/quota/handler.go",
+      "to": "internal/quota/handler.go"
+    },
+    {
+      "from": "src/internal/quota/store.go",
+      "to": "internal/quota/store.go"
+    },
+    {
+      "from": "src/internal/quota/store_test.go",
+      "to": "internal/quota/store_test.go"
+    }
+  ],
+  "env_required": []
+}
